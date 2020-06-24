@@ -143,3 +143,19 @@ i {
     transform: translate(-50%,-50%);
     -ms-transform: translate(-50%,-50%);
 }
+/*About Me*/
+.two-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.about-me-img > img{
+    width: 90%;
+    height: 100%;
+    border: 5px gold solid;
+}
+.about-me-content {
+    padding: 15px;
+}
+.about-me-content h2 {
+    color: white;
+}
