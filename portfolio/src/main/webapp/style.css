@@ -3,6 +3,7 @@
     font-family: 'Montserrat', sans-serif;
     margin: 0px;
     background-color: dimgray;
+    color: white;
     text-align: left;
 }
 .container {
@@ -12,8 +13,17 @@
 /*Navigation bar*/
 h1 {
     background-color: black;
-    color: yellow;
     text-align: center;
+}
+h1 a{
+    background-color: black;
+    color: gold;
+    text-align: center;
+    text-decoration: none;
+    transition: color 0.5s;
+}
+h1 a:hover {
+    color: white;
 }
 .left-edge{
     background-color: black;
@@ -54,7 +64,6 @@ h1 {
 }
 .nav-link a {
     background-color: black;
-    color: white;
     text-decoration: none;
     transition: color 0.5s;
 }
@@ -66,3 +75,65 @@ h1 {
     color: gold;
 }
 /*Portfolio*/
+.main-content {
+    padding: 10px;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: .01fr .9fr;
+    align-items: center;
+}
+i {
+    padding: 12.5px;
+}
+.item1 {
+    grid-template-rows: 1fr 1fr 1fr;
+}
+.text-main {
+    color: black;
+    padding: 12.5px;
+}
+.intro {
+    position: relative;
+    display: grid;
+}
+.img-wrapper {
+    background-image: url("images/profile1.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 500px;
+    width: 100%;
+}
+.circular-portrait {
+    position: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+}
+.overlay {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 500px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: background-color 1s;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
+}
+.overlay-text {
+    position: absolute;
+    background: transparent;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+}

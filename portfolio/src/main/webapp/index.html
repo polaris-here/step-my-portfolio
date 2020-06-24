@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <title>My Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1>My Portfolio</h1>
+        <h1><a href="index.html">My Portfolio</a></h1>
         <div class="navbar">
             <div class="left-edge">
-                <a href="index.html" id="Name">Chance Lau</a>
+                <a href="index.html">Chance Lau</a>
             </div>
             <div class="right-edge">
                 <div class="nav-link">
@@ -27,9 +28,31 @@
             </div>
         </div>
     </div>
-    <img src="images/knnw.png" width="10%">
+    <div class="intro" onmouseover="on()">
+        <div class="img-wrapper circular-portrait"></div>
+        <div class="overlay" onmouseout="off()">
+            <div class="overlay-text" onmouseover="on()">
+                Hi, I'm Chance!
+                <br>Welcome to my page:)</br>
+            </div>
+        </div>
+    </div>
 
-    <div class="content">
+    <div class="main-content">
+        <div class="grid-container">
+            <i class="material-icons item1">layers</i>
+            <p class="text-main">
+                I created custom implementations of fundamental ADTs such as deques, priority queues, and tree-maps.
+            </p>
+            <i class="material-icons">cloud</i>
+            <p class="text-main">
+                I utilized Google's maps API to create a safety application for HackDavis2020.
+            </p>
+            <i class="material-icons">videogame_asset</i>
+            <p class="text-main">
+                I built AIs to play board games such as Oska, Rush Hour, and TilePuzzle.
+            </p>
+        </div>
     </div>
 </body>
 </html>
