@@ -74,6 +74,12 @@ h1 a:hover {
 .nav-link a:hover {
     color: gold;
 }
+.current-link {
+    border-bottom: 1px gold solid;
+}
+.current-link a {
+    color: gold;
+}
 /*Portfolio*/
 .main-content {
     padding: 10px;
