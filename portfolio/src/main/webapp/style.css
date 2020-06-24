@@ -1,9 +1,65 @@
-#content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 650px;
+/*Default*/
+* {
+    margin: 0px;
+    background-color: dimgray;
+    text-align: left;
 }
-
-#greeting-container {
-  margin-top: 20px;
+.container {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+/*Navigation bar*/
+h1 {
+    background-color: black;
+    color: yellow;
+    text-align: center;
+}
+.left-edge{
+    background-color: black;
+}
+.left-edge a{
+    background-color: black;
+    color: gold;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 0.5s;
+}
+.left-edge a:hover {
+    color: white;
+}
+.right-edge {
+    background-color: black;
+    display: flex;
+}
+.title {
+    display: flex;
+    justify-content: space-between;
+}
+.navbar {
+    background-color: black;
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+}
+.navbar > .right-edge > div {
+    background-color: black;
+    margin-left: 12.5px;
+    margin-right: 12.5px;
+}
+.nav-link {
+    height: 20px;
+    border-bottom: 1px solid transparent;
+    transition: border-bottom 0.5s;
+}
+.nav-link a {
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    transition: color 0.5s;
+}
+.nav-link:hover {
+    border-bottom: 1px solid gold;
+}
+.nav-link a:hover {
+    color: gold;
 }
