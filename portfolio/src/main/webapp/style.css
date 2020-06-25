@@ -178,3 +178,28 @@ i {
 .about-me-content h2 {
     color: white;
 }
+/*See Me*/
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+}
+.entry {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 500px;
+    height: 550px;
+}
+.entry > img {
+    width: 500px;
+    height: 500px;
+}
+.subtitle {
+    padding: 10px;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+.entry > p {
+    text-align: center;
+}
