@@ -203,3 +203,22 @@ i {
 .entry > p {
     text-align: center;
 }
+/*Reach Me*/
+.fa {
+    padding: 20px;
+    font-size: 30px;
+    width: 50px;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 2px;
+}
+.fa:hover {
+    background-color: rgba(0,0,0,0.5);
+}
+.media-container {
+    display: flex;
+    position: relative;
+}
+.box {
+    justify-content: space-between;
+}
