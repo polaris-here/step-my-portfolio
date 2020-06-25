@@ -175,8 +175,14 @@ i {
     padding: 15px;
     flex: 2;
 }
+.about-me-content > ol > li {
+    padding: 15px;
+}
 .about-me-content h2 {
     color: white;
+}
+.about-me-content h4 {
+    padding: 5px;
 }
 /*See Me*/
 .flex-container {
