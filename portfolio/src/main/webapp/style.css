@@ -84,20 +84,33 @@ h1 a:hover {
 .main-content {
     padding: 10px;
 }
-.grid-container {
-    display: grid;
-    grid-template-columns: .01fr .9fr;
+.portfolio-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
     align-items: center;
 }
-i {
-    padding: 12.5px;
+.column {
+    flex: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
 }
-.item1 {
-    grid-template-rows: 1fr 1fr 1fr;
+.text-main > li {
+    list-style-type: circle;
+    color: black;
+    padding: 2px;
+}
+i {
+    padding: 10px;
+    flex: .1fr;
 }
 .text-main {
     color: black;
     padding: 12.5px;
+    flex: .9fr;
+    text-align: center;
 }
 .intro {
     position: relative;
