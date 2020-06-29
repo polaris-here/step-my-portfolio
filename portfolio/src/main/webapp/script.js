@@ -18,3 +18,9 @@ function on() {
 function off() {
     document.getElementsByClassName("overlay")[0].style.display = "none";
 }
+// asynchronously fetch content from server
+async function getContent() {
+  const response = await fetch('/data');
+  const quote = await response.text();
+  document.getElementById('content-container').innerText = quote;
+}
