@@ -21,16 +21,16 @@ function off() {
 // asynchronously fetch content from server
 async function getContent() {
     const response = await fetch('/data');
-    const hardCodedContent = await response.json();
+    const content = await response.json();
   
     const contentListElement = document.getElementById("content-container");
     contentListElement.innerHTML = '';
     contentListElement.appendChild(
-        createListElement("Element 0: " + hardCodedContent[0]));
+        createListElement("Element 0: " + content[0]));
     contentListElement.appendChild(
-        createListElement("Element 1: " + hardCodedContent[1]));
+        createListElement("Element 1: " + content[1]));
     contentListElement.appendChild(
-        createListElement("Element 2: " + hardCodedContent[2]));
+        createListElement("Element 2: " + content[2]));
 }
 
 /** Creates an <li> element containing text. */
