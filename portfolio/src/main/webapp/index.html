@@ -78,7 +78,19 @@
         <!--fetch content from server-->
         <div class="commentSection">
             <button onclick="getContent()">Fetch content from server!</button>
-            <div id="content-container"></div>
+            <ul id="content-container"></ul>
+
+            <form action="/data" method="POST">
+                <p>Leave a comment!</p>
+                <textarea name="text-input">Comment here...</textarea>
+                <br/>
+                <input type="checkbox" name="upper-case" value="true"> Upper-case
+                <br/>
+                <input type="checkbox" name="sort" value="true"> Alphabetize
+                <br/><br/>
+
+                <input type="submit">
+            </form>
         </div>
     </div>
 </body>
