@@ -16,6 +16,7 @@ package com.google.sps.servlets;
 
 import com.google.gson.Gson;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
@@ -26,22 +27,54 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-    private List<String> hardCodedValues;
+    private List<String> comments;
 
     @Override
     public void init() {
-        hardCodedValues = new ArrayList<>();
-        hardCodedValues.add("message 1");
-        hardCodedValues.add("message 2");
-        hardCodedValues.add("message 3");
+        comments = new ArrayList<>();
     }
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Gson gson = new Gson();
-        String json = gson.toJson(hardCodedValues);
+        String json = gson.toJson(comments);
 
         response.setContentType("application/json");
         response.getWriter().println(json);
-  }
+    }
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String text = getParameter(request, "text-input", "");
+        boolean upperCase = Boolean.parseBoolean(getParameter(request, "upper-case", "false"));
+        boolean sort = Boolean.parseBoolean(getParameter(request, "sort", "false"));
+
+        // Convert the text to upper case.
+        if (upperCase) {
+            text = text.toUpperCase();
+        }
+
+        // Break the text into individual words.
+        String[] words = text.split("\\s*,\\s*");
+
+        // Sort the words.
+        if (sort) {
+            Arrays.sort(words);
+        }
+        comments.add(text);
+        comments.add(Arrays.toString(words));
+
+        // Respond with the result.
+        response.setContentType("text/html;");
+        response.getWriter().println(comments);
+        // response.sendRedirect("/index.html");
+    }
+    // helper function
+    // @return request parameter
+    private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+        String value = request.getParameter(name);
+        if (value == null) {
+            return defaultValue;
+        }
+        return value;
+    }
 }
