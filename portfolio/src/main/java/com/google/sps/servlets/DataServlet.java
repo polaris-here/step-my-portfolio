@@ -66,7 +66,8 @@ public class DataServlet extends HttpServlet {
         // Respond with the result.
         response.setContentType("text/html;");
         response.getWriter().println(comments);
-        // response.sendRedirect("/index.html");
+        // redirect to original page after response
+        response.sendRedirect("/index.html");
     }
     // helper function
     // @return request parameter
