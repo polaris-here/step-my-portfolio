@@ -26,11 +26,11 @@ async function getContent() {
     const contentListElement = document.getElementById("content-container");
     contentListElement.innerHTML = '';
     contentListElement.appendChild(
-        createListElement("Element 1: " + hardCodedContent[0]));
+        createListElement("Element 0: " + hardCodedContent[0]));
     contentListElement.appendChild(
-        createListElement("Element 2: " + hardCodedContent[1]));
+        createListElement("Element 1: " + hardCodedContent[1]));
     contentListElement.appendChild(
-        createListElement("Element 3: " + hardCodedContent[2]));
+        createListElement("Element 2: " + hardCodedContent[2]));
 }
 
 /** Creates an <li> element containing text. */
