@@ -13,14 +13,27 @@
 // limitations under the License.
 
 function on() {
-    document.getElementsByClassName("overlay")[0].style.display = "block";
+  document.getElementsByClassName("overlay")[0].style.display = "block";
 }
 function off() {
-    document.getElementsByClassName("overlay")[0].style.display = "none";
+  document.getElementsByClassName("overlay")[0].style.display = "none";
 }
 // asynchronously fetch content from server
 async function getContent() {
   const response = await fetch('/data');
-  const quote = await response.text();
-  document.getElementById('content-container').innerText = quote;
+  const content = await response.json();
+  
+  const contentListElement = document.getElementById("content-container");
+  contentListElement.innerHTML = '';
+  for(let i = 0; i < content.length; i++) {
+    contentListElement.appendChild(
+      createListElement("Element " + i + ": " + content[i]))
+  }
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }
