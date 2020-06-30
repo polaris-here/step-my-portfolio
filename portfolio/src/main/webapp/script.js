@@ -13,22 +13,22 @@
 // limitations under the License.
 
 function on() {
-    document.getElementsByClassName("overlay")[0].style.display = "block";
+  document.getElementsByClassName("overlay")[0].style.display = "block";
 }
 function off() {
-    document.getElementsByClassName("overlay")[0].style.display = "none";
+  document.getElementsByClassName("overlay")[0].style.display = "none";
 }
 // asynchronously fetch content from server
 async function getContent() {
-    const response = await fetch('/data');
-    const content = await response.json();
+  const response = await fetch('/data');
+  const content = await response.json();
   
-    const contentListElement = document.getElementById("content-container");
-    contentListElement.innerHTML = '';
-    for(let i=0; i < content.length; i++) {
-        contentListElement.appendChild(
-            createListElement("Element " + i + ": " + content[i]))
-    }
+  const contentListElement = document.getElementById("content-container");
+  contentListElement.innerHTML = '';
+  for(let i = 0; i < content.length; i++) {
+    contentListElement.appendChild(
+      createListElement("Element " + i + ": " + content[i]))
+  }
 }
 
 /** Creates an <li> element containing text. */
