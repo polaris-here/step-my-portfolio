@@ -17,6 +17,9 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,18 +36,27 @@ public class DataServlet extends HttpServlet {
   private List<String> comments;
 
   @Override
-  public void init() {
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Load entries from database
+    Query query = new Query("comment");
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
+
     comments = new ArrayList<>();
-  }
+    for (Entity entity : results.asIterable()) {
+      String commentEntry = (String) entity.getProperty("comment-text");
 
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Gson gson = new Gson();
-        String json = gson.toJson(comments);
-
-        response.setContentType("application/json");
-        response.getWriter().println(json);
+      comments.add(commentEntry);
     }
+
+    // Convert object to json
+    Gson gson = new Gson();
+    String json = gson.toJson(comments);
+
+    response.setContentType("application/json");
+    response.getWriter().println(json);
+  }
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String text = getParameter(request, "text-input", "");
@@ -54,8 +66,6 @@ public class DataServlet extends HttpServlet {
     if (upperCase) {
       text = text.toUpperCase();
     }
-
-    comments.add(text);
     
     // Store comments in a database
     Entity taskEntity = new Entity("comment");
@@ -63,9 +73,6 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(taskEntity);
 
-    // Respond with the result.
-    response.setContentType("text/html;");
-    response.getWriter().println(comments);
     // redirect to original page after response
     response.sendRedirect("/index.html");
   }
