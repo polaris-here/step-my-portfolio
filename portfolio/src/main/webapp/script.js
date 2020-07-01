@@ -19,11 +19,11 @@ function off() {
   document.getElementsByClassName("overlay")[0].style.display = "none";
 }
 // asynchronously fetch content from server
-async function getContent() {
-  const response = await fetch('/data');
+async function getComments(value=2) {
+  const response = await fetch('/data?comment-limit-choice=' + value);
   const content = await response.json();
   
-  const contentListElement = document.getElementById("content-container");
+  const contentListElement = document.getElementById("comment-container");
   contentListElement.innerHTML = '';
   for(let i = 0; i < content.length; i++) {
     contentListElement.appendChild(

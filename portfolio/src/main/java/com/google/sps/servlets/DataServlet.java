@@ -37,8 +37,14 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Get input form the form
+    // Get input from the form
     int commentLimitChoice = getCommentLimitChoice(request);
+
+    if (commentLimitChoice == -1) {
+      response.setContentType("text/html");
+      response.getWriter().println("Please enter an integer between 1 and 10.");
+      return;
+    }
 
     // Load entries from database
     Query query = new Query("comment");
@@ -48,9 +54,13 @@ public class DataServlet extends HttpServlet {
 
     comments = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
+      if (commentLimitChoice == 0) {
+        break;
+      }
       String commentEntry = (String) entity.getProperty("comment-text");
 
       comments.add(commentEntry);
+      commentLimitChoice -= 1;
     }
 
     // Convert object to json
@@ -59,6 +69,7 @@ public class DataServlet extends HttpServlet {
 
     response.setContentType("application/json");
     response.getWriter().println(json);
+    // response.sendRedirect("/index.html");
   }
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -83,7 +94,7 @@ public class DataServlet extends HttpServlet {
   // Helper function: @return player choice for displayed comment limit
   private int getCommentLimitChoice(HttpServletRequest request) {
     // Get input from the form
-    String commentLimitChoiceString = request.getParameter("comment-limit-choice");
+    String commentLimitChoiceString = getParameter(request, "comment-limit-choice", "1");
 
     // Convert input to int
     int commentLimitChoice;
@@ -95,7 +106,7 @@ public class DataServlet extends HttpServlet {
     }
 
     // Check that input is between 1 and 10
-    if (getCommentLimitChoice < 1 || commentLimitChoice > 10) {
+    if (commentLimitChoice < 1 || commentLimitChoice > 10) {
       System.err.println("Player choice is out of range: " + commentLimitChoiceString);
       return -1;
     }

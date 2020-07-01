@@ -77,8 +77,13 @@
 
     <!--fetch content from server-->
     <div class="commentSection">
-      <button onclick="getContent()">Fetch content from server!</button>
-      <ul id="content-container"></ul>
+      <button onclick="getComments()">Load Comments</button>
+      <p>
+        Choose 
+        <input type="number" name="comment-limit-choice" min="1" max="10" value="1" onchange="getComments(this.value)"> 
+        comments to be displayed.
+      </p>
+      <ul id="comment-container"></ul>
 
       <form action="/data" method="POST">
         <p>Leave a comment!</p>
