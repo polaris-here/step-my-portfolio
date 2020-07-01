@@ -19,21 +19,28 @@ function off() {
   document.getElementsByClassName("overlay")[0].style.display = "none";
 }
 // asynchronously fetch content from server
-async function getContent() {
-  const response = await fetch('/data');
+async function getComments(value=2) {
+  const response = await fetch('/data?comment-limit-choice=' + value);
   const content = await response.json();
   
-  const contentListElement = document.getElementById("content-container");
+  const contentListElement = document.getElementById("comment-container");
   contentListElement.innerHTML = '';
   for(let i = 0; i < content.length; i++) {
     contentListElement.appendChild(
       createListElement("Element " + i + ": " + content[i]))
   }
 }
-
-/** Creates an <li> element containing text. */
+/** Helper func: Creates an <li> element containing text. */
 function createListElement(text) {
   const liElement = document.createElement('li');
   liElement.innerText = text;
   return liElement;
+}
+// Delete comments
+async function deleteData() {
+  const request = new Request('/delete-data', {method: 'POST'});
+  await fetch(request);
+  
+  // Remove now-deleted comments from page
+  getComments();
 }
