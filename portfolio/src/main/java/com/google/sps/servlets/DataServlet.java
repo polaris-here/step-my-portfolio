@@ -37,6 +37,9 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Get input form the form
+    int commentLimitChoice = getCommentLimitChoice(request);
+
     // Load entries from database
     Query query = new Query("comment");
 
@@ -73,11 +76,35 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(taskEntity);
 
-    // redirect to original page after response
+    // Redirect to original page after response
     response.sendRedirect("/index.html");
   }
-  // helper function
-  // @return request parameter
+
+  // Helper function: @return player choice for displayed comment limit
+  private int getCommentLimitChoice(HttpServletRequest request) {
+    // Get input from the form
+    String commentLimitChoiceString = request.getParameter("comment-limit-choice");
+
+    // Convert input to int
+    int commentLimitChoice;
+    try {
+      commentLimitChoice = Integer.parseInt(commentLimitChoiceString);
+    } catch (NumberFormatException e) {
+      System.err.println("Could not convert to int: " + commentLimitChoiceString);
+      return -1;
+    }
+
+    // Check that input is between 1 and 10
+    if (getCommentLimitChoice < 1 || commentLimitChoice > 10) {
+      System.err.println("Player choice is out of range: " + commentLimitChoiceString);
+      return -1;
+    }
+
+    return commentLimitChoice;
+  }
+
+
+  // Helper function: @return request parameter
   private String getParameter(HttpServletRequest request, String name, String defaultValue) {
     String value = request.getParameter(name);
     if (value == null) {
