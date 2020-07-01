@@ -30,10 +30,17 @@ async function getComments(value=2) {
       createListElement("Element " + i + ": " + content[i]))
   }
 }
-
-/** Creates an <li> element containing text. */
+/** Helper func: Creates an <li> element containing text. */
 function createListElement(text) {
   const liElement = document.createElement('li');
   liElement.innerText = text;
   return liElement;
+}
+// Delete comments
+async function deleteData() {
+  const request = new Request('/delete-data', {method: 'POST'});
+  await fetch(request);
+  
+  // Remove now-deleted comments from page
+  getComments();
 }

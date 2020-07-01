@@ -81,7 +81,7 @@
       <p>
         Choose 
         <input type="number" name="comment-limit-choice" min="1" max="10" value="1" onchange="getComments(this.value)"> 
-        comments to be displayed.
+        comments to be displayed. (and press enter)
       </p>
       <ul id="comment-container"></ul>
 
@@ -96,6 +96,8 @@
 
         <input type="submit">
       </form>
+
+      <button onclick="deleteData()">Delete all comments</button>
     </div>
   </div>
 </body>
