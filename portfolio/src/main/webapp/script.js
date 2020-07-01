@@ -27,7 +27,7 @@ async function getComments(value=2) {
   contentListElement.innerHTML = '';
   for(let i = 0; i < content.length; i++) {
     contentListElement.appendChild(
-      createListElement("Element " + i + ": " + content[i]))
+      createListElement(content[i]))
   }
 }
 /** Helper func: Creates an <li> element containing text. */
