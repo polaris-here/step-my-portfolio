@@ -47,7 +47,8 @@ public class DataServlet extends HttpServlet {
     }
 
     // Load entries from database
-    Query query = new Query("comment");
+    Query query = new Query("comment").addSort("timestamp", 
+                                               SortDirection.DESCENDING);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
@@ -75,6 +76,7 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String text = getParameter(request, "text-input", "");
     boolean upperCase = Boolean.parseBoolean(getParameter(request, "upper-case", "false"));
+    long timestamp = System.currentTimeMillis();
 
     // Convert the text to upper case.
     if (upperCase) {
@@ -84,6 +86,8 @@ public class DataServlet extends HttpServlet {
     // Store comments in a database
     Entity taskEntity = new Entity("comment");
     taskEntity.setProperty("comment-text", text);
+    taskEntity.setProperty("timestamp", timestamp);
+
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(taskEntity);
 
