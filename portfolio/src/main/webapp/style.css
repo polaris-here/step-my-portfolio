@@ -1,230 +1,230 @@
 /*Default*/
 * {
-    font-family: 'Montserrat', sans-serif;
-    margin: 0px;
-    background-color: dimgray;
-    color: white;
-    text-align: left;
+  font-family: 'Montserrat', sans-serif;
+  margin: 0px;
+  background-color: dimgray;
+  color: white;
+  text-align: left;
 }
 .container {
-    display: grid;
-    grid-template-columns: 1fr;
+  display: grid;
+  grid-template-columns: 1fr;
 }
 /*Navigation bar*/
 h1 {
-    background-color: black;
-    text-align: center;
+  background-color: black;
+  text-align: center;
 }
 h1 a{
-    background-color: black;
-    color: gold;
-    text-align: center;
-    text-decoration: none;
-    transition: color 0.5s;
+  background-color: black;
+  color: gold;
+  text-align: center;
+  text-decoration: none;
+  transition: color 0.5s;
 }
 h1 a:hover {
-    color: white;
+  color: white;
 }
 .left-edge{
-    background-color: black;
+  background-color: black;
 }
 .left-edge a{
-    background-color: black;
-    color: gold;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: color 0.5s;
+  background-color: black;
+  color: gold;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.5s;
 }
 .left-edge a:hover {
-    color: white;
+  color: white;
 }
 .right-edge {
-    background-color: black;
-    display: flex;
+  background-color: black;
+  display: flex;
 }
 .title {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 .navbar {
-    background-color: black;
-    display: flex;
-    justify-content: space-between;
-    padding: 8px;
+  background-color: black;
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
 }
 .navbar > .right-edge > div {
-    background-color: black;
-    margin-left: 12.5px;
-    margin-right: 12.5px;
+  background-color: black;
+  margin-left: 12.5px;
+  margin-right: 12.5px;
 }
 .nav-link {
-    height: 20px;
-    border-bottom: 1px solid transparent;
-    transition: border-bottom 0.5s;
+  height: 20px;
+  border-bottom: 1px solid transparent;
+  transition: border-bottom 0.5s;
 }
 .nav-link a {
-    background-color: black;
-    text-decoration: none;
-    transition: color 0.5s;
+  background-color: black;
+  text-decoration: none;
+  transition: color 0.5s;
 }
 .nav-link:hover {
-    border-bottom: 1px solid gold;
+  border-bottom: 1px solid gold;
 }
 
 .nav-link a:hover {
-    color: gold;
+  color: gold;
 }
 .current-link {
-    border-bottom: 1px gold solid;
+  border-bottom: 1px gold solid;
 }
 .current-link a {
-    color: gold;
+  color: gold;
 }
 /*Portfolio*/
 .main-content {
-    padding: 10px;
+  padding: 10px;
 }
 .portfolio-container {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
 }
 .column {
-    flex: 50%;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
+  flex: 50%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
     align-items: center;
 }
 .text-main > li {
-    list-style-type: circle;
-    color: black;
-    padding: 2px;
+  list-style-type: circle;
+  color: black;
+  padding: 2px;
 }
 i {
-    padding: 10px;
-    flex: .1fr;
+  padding: 10px;
+  flex: .1fr;
 }
 .text-main {
-    color: black;
-    padding: 12.5px;
-    flex: .9fr;
-    text-align: center;
+  color: black;
+  padding: 12.5px;
+  flex: .9fr;
+  text-align: center;
 }
 .intro {
-    position: relative;
-    display: grid;
+  position: relative;
+  display: grid;
 }
 .img-wrapper {
-    background-image: url("images/profile1.jpg");
-    background-size: cover;
-    background-position: center;
-    height: 500px;
-    width: 100%;
+  background-image: url("images/profile1.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 500px;
+  width: 100%;
 }
 .circular-portrait {
-    position: center;
-    margin-left: auto;
-    margin-right: auto;
-    width: 500px;
-    height: 500px;
-    border-radius: 50%;
+  position: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
 }
 .overlay {
-    position: absolute;
-    display: none;
-    width: 100%;
-    height: 500px;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    transition: background-color 1s;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 2;
-    cursor: pointer;
+  position: absolute;
+  display: none;
+  width: 100%;
+  height: 500px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: background-color 1s;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+  cursor: pointer;
 }
 .overlay-text {
-    position: absolute;
-    background: transparent;
-    text-align: center;
-    top: 50%;
-    left: 50%;
-    font-size: 50px;
-    color: white;
-    transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
+  position: absolute;
+  background: transparent;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  font-size: 50px;
+  color: white;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
 }
 /*About Me*/
 .two-columns {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 .about-me-img > img{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 50px;
-    border: 5px gold solid;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  border: 5px gold solid;
 }
 .about-me-img {
-    flex: 1;
+  flex: 1;
 }
 .about-me-content {
-    padding: 15px;
-    flex: 2;
+  padding: 15px;
+  flex: 2;
 }
 .about-me-content > ol > li {
-    padding: 15px;
+  padding: 15px;
 }
 .about-me-content h2 {
-    color: white;
+  color: white;
 }
 .about-me-content h4 {
-    padding: 5px;
+  padding: 5px;
 }
 /*See Me*/
 .flex-container {
-    display: flex;
-    flex-wrap: wrap;
-    position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
 }
 .entry {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 500px;
-    height: 550px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 500px;
+  height: 550px;
 }
 .entry > img {
-    width: 500px;
-    height: 500px;
+  width: 500px;
+  height: 500px;
 }
 .subtitle {
-    padding: 10px;
-    font-weight: bold;
-    font-size: 1.5rem;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 1.5rem;
 }
 .entry > p {
-    text-align: center;
+  text-align: center;
 }
 /*Reach Me*/
 .fa {
-    padding: 20px;
-    font-size: 30px;
-    width: 50px;
-    text-align: center;
-    text-decoration: none;
-    margin: 5px 2px;
+  padding: 20px;
+  font-size: 30px;
+  width: 50px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 2px;
 }
 .fa:hover {
-    background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0,0,0,0.5);
 }
 .media-container {
-    display: flex;
-    position: relative;
+  display: flex;
+  position: relative;
 }
 .box {
-    justify-content: space-between;
+  justify-content: space-between;
 }
