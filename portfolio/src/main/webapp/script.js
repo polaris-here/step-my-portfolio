@@ -49,10 +49,21 @@ async function deleteData() {
 }
 
 // Functions for Google Maps
+// Make the map
 function createMap() {
   console.log("createMap() exexuted");
+  const locGoogleplex = {lat: 37.422, lng: -122.084};
+  const mapInit = {
+    center: locGoogleplex,
+    zoom: 16}
+
   const map = new google.maps.Map(
-      document.getElementById("map"),
-      {center: {lat: 37.422, lng: -122.084}, zoom: 16});
+    document.getElementById("map"),
+    mapInit);
   console.log("createMap() finished");
+
+  const markerGoogleplex = new google.maps.Marker({
+    position: locGoogleplex,
+    map: map,
+    title: 'Googleplex office'});
 }
