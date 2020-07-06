@@ -12,12 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Functions for css effects
 function on() {
   document.getElementsByClassName("overlay")[0].style.display = "block";
 }
 function off() {
   document.getElementsByClassName("overlay")[0].style.display = "none";
 }
+
+// Functions for server
 // asynchronously fetch content from server
 async function getComments(value=2) {
   const response = await fetch('/data?comment-limit-choice=' + value);
@@ -43,4 +46,13 @@ async function deleteData() {
   
   // Remove now-deleted comments from page
   getComments();
+}
+
+// Functions for Google Maps
+function createMap() {
+  console.log("createMap() exexuted");
+  const map = new google.maps.Map(
+      document.getElementById("map"),
+      {center: {lat: 37.422, lng: -122.084}, zoom: 16});
+  console.log("createMap() finished");
 }
