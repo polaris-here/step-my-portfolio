@@ -136,6 +136,7 @@ function createMarkerForEdit(lat, lng) {
 function buildInfoWindowInput(lat, lng) {
   const textBox = document.createElement('textarea');
   const button = document.createElement('button');
+  textBox.appendChild(document.createTextNode('Write a description here...'));
   button.appendChild(document.createTextNode('Submit'));
 
   button.onclick = () => {
