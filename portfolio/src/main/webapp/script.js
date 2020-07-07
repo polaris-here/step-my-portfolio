@@ -16,6 +16,7 @@
 function on() {
   document.getElementsByClassName("overlay")[0].style.display = "block";
 }
+
 function off() {
   document.getElementsByClassName("overlay")[0].style.display = "none";
 }
@@ -33,12 +34,14 @@ async function getComments(value=2) {
       createListElement(content[i]))
   }
 }
+
 /** Helper func: Creates an <li> element containing text. */
 function createListElement(text) {
   const liElement = document.createElement('li');
   liElement.innerText = text;
   return liElement;
 }
+
 // Delete comments
 async function deleteData() {
   const request = new Request('/delete-data', {method: 'POST'});
@@ -78,6 +81,7 @@ function createMap() {
   // Get saved markers from datastore
   fetchMarkers();
 }
+
 // Helper: Fetch saved markers from database and adds them to map
 async function fetchMarkers() {
   const response = await fetch('/markers');
@@ -88,6 +92,7 @@ async function fetchMarkers() {
       createMarkerForDisplay(marker.lat, marker.lng, marker.content)
     });
 }
+
 // Helper: Create markers, click on for pop-up info (text)
 function createMarkerForDisplay(lat, lng, content) {
   const marker = 
@@ -98,6 +103,7 @@ function createMarkerForDisplay(lat, lng, content) {
     infoWindow.open(map, marker);
   });
 }
+
 // Helper: Store marker in database
 function postMarker(lat, lng, content) {
   const params = new URLSearchParams();
@@ -108,6 +114,7 @@ function postMarker(lat, lng, content) {
 
   fetch('/markers', {method: 'POST', body: params});
 }
+
 /** Helper for on-click listen event: 
  *  Create marker with text-prompt
  */
@@ -130,6 +137,7 @@ function createMarkerForEdit(lat, lng) {
 
   infoWindow.open(map, editMarker);
 }
+
 /** Build and return HTML elements that show the editable textbox and submit
   * button
   */

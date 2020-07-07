@@ -2,9 +2,11 @@
 * {
   font-family: 'Montserrat', sans-serif;
   margin: 0px;
-  background-color: dimgray;
   color: white;
   text-align: left;
+}
+.default-body, button, input, textarea{
+  background-color: dimgray;
 }
 .container {
   display: grid;
@@ -242,15 +244,5 @@ i {
 #map {
   border: thin solid black;
   height: 500px;
-  width: 500px;
-  
-}
-#map * {
-    background-color: initial;
-}
-.map-container > div *{
-    color: red;
-}
-.map-container > div > textarea {
-    background-color:black;
+  width: 500px; 
 }
