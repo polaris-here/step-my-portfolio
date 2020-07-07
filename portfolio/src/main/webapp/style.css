@@ -240,7 +240,6 @@ i {
     justify-content: center;
 }
 #map {
-  background-color: red;
   border: thin solid black;
   height: 500px;
   width: 500px;
@@ -248,4 +247,10 @@ i {
 }
 #map * {
     background-color: initial;
+}
+.map-container > div *{
+    color: red;
+}
+.map-container > div > textarea {
+    background-color:black;
 }
