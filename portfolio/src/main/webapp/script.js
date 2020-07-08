@@ -160,3 +160,11 @@ function buildInfoWindowInput(lat, lng) {
 
   return containerDiv;
 }
+
+// Authentification functions
+async function login() {
+    const response = await fetch('/home');
+    console.log('fetched /home');
+    const content = await response.json();
+    console.log('got response: ' + content);
+}
