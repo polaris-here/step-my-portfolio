@@ -20,6 +20,8 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -77,6 +79,9 @@ public class DataServlet extends HttpServlet {
     String text = getParameter(request, "text-input", "");
     boolean upperCase = Boolean.parseBoolean(getParameter(request, "upper-case", "false"));
     long timestamp = System.currentTimeMillis();
+    
+    UserService userService = UserServiceFactory.getUserService();
+    String email = userService.getCurrentUser().getEmail();
 
     // Convert the text to upper case.
     if (upperCase) {
@@ -85,8 +90,10 @@ public class DataServlet extends HttpServlet {
     
     // Store comments in a database
     Entity taskEntity = new Entity("comment");
-    taskEntity.setProperty("comment-text", text);
+    taskEntity.setProperty("email", email);
     taskEntity.setProperty("timestamp", timestamp);
+    taskEntity.setProperty("comment-text", text);
+
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(taskEntity);
