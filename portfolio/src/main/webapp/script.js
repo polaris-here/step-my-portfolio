@@ -170,9 +170,10 @@ async function login() {
   console.log('got response: ' + content.isLoggedIn + ', ' + content.url);
 
   loginWrapper = document.getElementById('login-wrapper');
-
+  // Sign in to access comment section
   if (content.isLoggedIn) {
-    loginWrapper.style = 'display: none';
+    loginWrapper.innerHTML = '<p>Sign out <a href=\"' + content.url + 
+      '\">here</a>.</p>';
     document.getElementById('comment-wrapper').style = 'display: initial';
   } else {
     loginWrapper.innerHTML = '<p>Sign in <a href=\"' + content.url + 
