@@ -161,10 +161,21 @@ function buildInfoWindowInput(lat, lng) {
   return containerDiv;
 }
 
-// Authentification functions
+// Functions for authentification 
+// Login to access comments section
 async function login() {
-    const response = await fetch('/home');
-    console.log('fetched /home');
-    const content = await response.json();
-    console.log('got response: ' + content);
+  const response = await fetch('/home');
+  console.log('fetched /home');
+  const content = await response.json();
+  console.log('got response: ' + content.isLoggedIn + ', ' + content.url);
+
+  loginWrapper = document.getElementById('login-wrapper');
+
+  if (content.isLoggedIn) {
+    loginWrapper.style = 'display: none';
+    document.getElementById('comment-wrapper').style = 'display: initial';
+  } else {
+    loginWrapper.innerHTML = '<p>Sign in <a href=\"' + content.url + 
+      '\">here</a> to see comments.</p>';
+  }
 }

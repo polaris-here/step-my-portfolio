@@ -26,7 +26,22 @@ public class HomeServlet extends HttpServlet {
 
     // Responds with login status of user
     boolean loggedIn = userService.isUserLoggedIn();
-    String json = gson.toJson(loggedIn);
+    String url;
+    if (loggedIn) {
+      String logoutUrl = userService.createLogoutURL("/");
+      url = logoutUrl;
+    } else {
+      String loginUrl = userService.createLoginURL("/");
+      url = loginUrl;
+    }
+
+    String json = "{";
+    json += "\"isLoggedIn\": ";
+    json += loggedIn;
+    json += ", ";
+    json += "\"url\": ";
+    json += "\"" + url + "\"";
+    json += "}";
     out.println(json);
   }
 }
