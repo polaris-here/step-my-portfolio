@@ -3,22 +3,23 @@ package com.google.sps.data;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 // Represents a comment response
 public class CommentResponse {
 
-  private List<String> comments = new ArrayList<>();
-  private List<String> emails = new ArrayList<>();
+  private String comment;
+  private String email;
 
-  public CommentResponse(List<String> comments, List<String> emails) {
-    this.comments = comments;
-    this.emails = emails;
+  public CommentResponse(String comment, String email) {
+    this.comment = comment;
+    this.email = email;
   }
 
-  public List<String> getComments() {
-    return comments;
+  public String getComment() {
+    return comment;
   }
 
-  public List<String> getEmails() {
-    return emails;
+  public String getEmail() {
+    return email;
   }
 }

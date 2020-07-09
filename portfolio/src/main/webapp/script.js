@@ -23,21 +23,23 @@ function off() {
 
 // Functions for server
 // asynchronously fetch content from server
-async function getComments(value=2) {
+async function getComments(value=1) {
   const response = await fetch('/data?comment-limit-choice=' + value);
+  // content is an arraylist of obj CommentResponse{comment, email}
   const content = await response.json();
-  console.log('getComments() content: ' + content.comments + ', ' + content.emails);
+  console.log('getComments() content: ' + content);
+  console.log('content[0]: ' + content[0].comment + ', ' + content[0].email);
   
   const contentListElement = document.getElementById("comment-container");
   contentListElement.innerHTML = '';
-  for(let i = 0; i < content.comments.length; i++) {
+  for(let i = 0; i < content.length; i++) {
     contentListElement.appendChild(
-      createListElement(content.emails[i], content.comments[i]));
+      createListElement( content[i].comment, content[i].email));
   }
 }
 
 /** Helper func: Creates an <li> element containing text. */
-function createListElement(userID, text) {
+function createListElement(text, userID) {
   const liElement = document.createElement('li');
   liElement.innerText = userID + ' says: ' + text;
   return liElement;

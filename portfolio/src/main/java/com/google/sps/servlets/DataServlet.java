@@ -36,8 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-  private List<String> comments;
-  private List<String> emails;
+  private List<CommentResponse> commentResponses;
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -57,24 +56,22 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
-    comments = new ArrayList<>();
-    emails = new ArrayList<>();
+    commentResponses = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
       if (commentLimitChoice == 0) {
         break;
       }
       String commentEntry = (String) entity.getProperty("comment-text");
-      String complimentEmail = (String) entity.getProperty("email");
+      String email = (String) entity.getProperty("email");
 
-      comments.add(commentEntry);
-      emails.add(complimentEmail);
+      commentResponses.add(new CommentResponse(commentEntry, email));
+
       commentLimitChoice -= 1;
     }
 
     // Convert object to json
     Gson gson = new Gson();
-    CommentResponse commentResponse = new CommentResponse(comments, emails);
-    String json = gson.toJson(commentResponse);
+    String json = gson.toJson(commentResponses);
 
     response.setContentType("application/json");
     response.getWriter().println(json);

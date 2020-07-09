@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+// Handle user authentification
 @WebServlet("/home")
 public class HomeServlet extends HttpServlet {
   @Override
@@ -33,6 +34,7 @@ public class HomeServlet extends HttpServlet {
       url = loginUrl;
     }
 
+    // Practice manaully converting to json
     String json = "{";
     json += "\"isLoggedIn\": ";
     json += loggedIn;
