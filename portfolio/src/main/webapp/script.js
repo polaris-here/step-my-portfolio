@@ -26,19 +26,20 @@ function off() {
 async function getComments(value=2) {
   const response = await fetch('/data?comment-limit-choice=' + value);
   const content = await response.json();
+  console.log('getComments() content: ' + content.comments + ', ' + content.emails);
   
   const contentListElement = document.getElementById("comment-container");
   contentListElement.innerHTML = '';
-  for(let i = 0; i < content.length; i++) {
+  for(let i = 0; i < content.comments.length; i++) {
     contentListElement.appendChild(
-      createListElement(content[i]))
+      createListElement(content.emails[i], content.comments[i]));
   }
 }
 
 /** Helper func: Creates an <li> element containing text. */
-function createListElement(text) {
+function createListElement(userID, text) {
   const liElement = document.createElement('li');
-  liElement.innerText = text;
+  liElement.innerText = userID + ' says: ' + text;
   return liElement;
 }
 

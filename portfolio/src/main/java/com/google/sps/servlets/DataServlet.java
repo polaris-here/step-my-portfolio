@@ -23,6 +23,7 @@ import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gson.Gson;
+import com.google.sps.data.CommentResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,6 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
   private List<String> comments;
+  private List<String> emails;
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -56,19 +58,23 @@ public class DataServlet extends HttpServlet {
     PreparedQuery results = datastore.prepare(query);
 
     comments = new ArrayList<>();
+    emails = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
       if (commentLimitChoice == 0) {
         break;
       }
       String commentEntry = (String) entity.getProperty("comment-text");
+      String complimentEmail = (String) entity.getProperty("email");
 
       comments.add(commentEntry);
+      emails.add(complimentEmail);
       commentLimitChoice -= 1;
     }
 
     // Convert object to json
     Gson gson = new Gson();
-    String json = gson.toJson(comments);
+    CommentResponse commentResponse = new CommentResponse(comments, emails);
+    String json = gson.toJson(commentResponse);
 
     response.setContentType("application/json");
     response.getWriter().println(json);
@@ -79,7 +85,7 @@ public class DataServlet extends HttpServlet {
     String text = getParameter(request, "text-input", "");
     boolean upperCase = Boolean.parseBoolean(getParameter(request, "upper-case", "false"));
     long timestamp = System.currentTimeMillis();
-    
+
     UserService userService = UserServiceFactory.getUserService();
     String email = userService.getCurrentUser().getEmail();
 
