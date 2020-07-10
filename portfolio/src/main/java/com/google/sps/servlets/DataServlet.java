@@ -20,7 +20,10 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gson.Gson;
+import com.google.sps.data.CommentResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-  private List<String> comments;
+  private List<CommentResponse> commentResponses;
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -53,20 +56,22 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
-    comments = new ArrayList<>();
+    commentResponses = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
       if (commentLimitChoice == 0) {
         break;
       }
       String commentEntry = (String) entity.getProperty("comment-text");
+      String email = (String) entity.getProperty("email");
 
-      comments.add(commentEntry);
+      commentResponses.add(new CommentResponse(commentEntry, email));
+
       commentLimitChoice -= 1;
     }
 
     // Convert object to json
     Gson gson = new Gson();
-    String json = gson.toJson(comments);
+    String json = gson.toJson(commentResponses);
 
     response.setContentType("application/json");
     response.getWriter().println(json);
@@ -78,6 +83,9 @@ public class DataServlet extends HttpServlet {
     boolean upperCase = Boolean.parseBoolean(getParameter(request, "upper-case", "false"));
     long timestamp = System.currentTimeMillis();
 
+    UserService userService = UserServiceFactory.getUserService();
+    String email = userService.getCurrentUser().getEmail();
+
     // Convert the text to upper case.
     if (upperCase) {
       text = text.toUpperCase();
@@ -85,8 +93,10 @@ public class DataServlet extends HttpServlet {
     
     // Store comments in a database
     Entity taskEntity = new Entity("comment");
-    taskEntity.setProperty("comment-text", text);
+    taskEntity.setProperty("email", email);
     taskEntity.setProperty("timestamp", timestamp);
+    taskEntity.setProperty("comment-text", text);
+
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(taskEntity);

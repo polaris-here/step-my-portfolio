@@ -23,22 +23,25 @@ function off() {
 
 // Functions for server
 // asynchronously fetch content from server
-async function getComments(value=2) {
+async function getComments(value=1) {
   const response = await fetch('/data?comment-limit-choice=' + value);
+  // content is an arraylist of obj CommentResponse{comment, email}
   const content = await response.json();
+  console.log('getComments() content: ' + content);
+  console.log('content[0]: ' + content[0].comment + ', ' + content[0].email);
   
   const contentListElement = document.getElementById("comment-container");
   contentListElement.innerHTML = '';
   for(let i = 0; i < content.length; i++) {
     contentListElement.appendChild(
-      createListElement(content[i]))
+      createListElement( content[i].comment, content[i].email));
   }
 }
 
 /** Helper func: Creates an <li> element containing text. */
-function createListElement(text) {
+function createListElement(text, userID) {
   const liElement = document.createElement('li');
-  liElement.innerText = text;
+  liElement.innerText = userID + ' says: ' + text;
   return liElement;
 }
 
@@ -159,4 +162,24 @@ function buildInfoWindowInput(lat, lng) {
   containerDiv.appendChild(button);
 
   return containerDiv;
+}
+
+// Functions for authentification 
+// Login to access comments section
+async function login() {
+  const response = await fetch('/home');
+  console.log('fetched /home');
+  const content = await response.json();
+  console.log('got response: ' + content.isLoggedIn + ', ' + content.url);
+
+  loginWrapper = document.getElementById('login-wrapper');
+  // Sign in to access comment section
+  if (content.isLoggedIn) {
+    loginWrapper.innerHTML = '<p>Sign out <a href=\"' + content.url + 
+      '\">here</a>.</p>';
+    document.getElementById('comment-wrapper').style = 'display: initial';
+  } else {
+    loginWrapper.innerHTML = '<p>Sign in <a href=\"' + content.url + 
+      '\">here</a> to see comments.</p>';
+  }
 }
