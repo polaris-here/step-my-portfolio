@@ -34,14 +34,16 @@ public final class FindMeetingQuery {
 
     ArrayList<TimeRange> meetings = new ArrayList<>();
     Collection<String> requestedAttendees = request.getAttendees();
+    Collection<String> requestedOptionalAttendees = 
+      request.getOptionalAttendees();
     long durationOfRequest = request.getDuration();
 
-    // Case 0: if no attendees in a meeting, return whole day
-    if (requestedAttendees.size() == 0) {
-      TimeRange emptyMeeting = TimeRange.fromStartDuration(0, WHOLE_DAY);
-      meetings.add(emptyMeeting);
-      return meetings;
-    }
+    // // Case 0: if no attendees in a meeting, return whole day
+    // if (requestedAttendees.size() == 0) {
+    //   TimeRange emptyMeeting = TimeRange.fromStartDuration(0, WHOLE_DAY);
+    //   meetings.add(emptyMeeting);
+    //   return meetings;
+    // }
 
     // Case 1: if duration too long (longer than a day), return no options
     if (durationOfRequest > WHOLE_DAY) {
@@ -53,16 +55,28 @@ public final class FindMeetingQuery {
       */
     meetings.add(TimeRange.fromStartDuration(0, WHOLE_DAY));
 
+    ArrayList<Event> optionalOverlappedEvents = new ArrayList<>();
+
     for (Event event : events) {
       Set<String> tempOverlappedEventAttendees = event.getAttendees();
+
       Set<String> overlappedEventAttendees = new HashSet<String>();
+      Set<String> optionalOverlappedAttendees = new HashSet<String>();
 
       // Copy attendees into a modifiable collection
-      for (String attendee : tempOverlappedEventAttendees) {
-        overlappedEventAttendees.add(attendee);
-      }
+      overlappedEventAttendees = 
+        copyToModifiableCollection(
+          overlappedEventAttendees, 
+          tempOverlappedEventAttendees);
+
+      // Copy optional attendees into a modifiable collection
+      optionalOverlappedAttendees = 
+        copyToModifiableCollection(
+          optionalOverlappedAttendees, 
+          tempOverlappedEventAttendees);
 
       overlappedEventAttendees.retainAll(requestedAttendees);
+      optionalOverlappedAttendees.retainAll(requestedOptionalAttendees);
       System.out.println("event: " + event.getTitle() + ", overlapped attendees: " + overlappedEventAttendees);
 
       // If the event contains attendees that were requested
@@ -70,7 +84,6 @@ public final class FindMeetingQuery {
         TimeRange eventTimeRange = event.getWhen();
         System.out.println("Overlap in proposed meets found >> Event of interest is: " + eventTimeRange.start() + " to " + eventTimeRange.end());
         System.out.println("Current proposed meetings: " + meetings);
-        ArrayList<TimeRange> proposedMeetings = new ArrayList<>();
 
         // Make new proposed meets to resolve timing conflicts
         System.out.println("Calling method: makeNewProposedMeetings...");
@@ -80,11 +93,47 @@ public final class FindMeetingQuery {
         Comparator<TimeRange> orderMeetings = TimeRange.ORDER_BY_START;
         Collections.sort(meetings, orderMeetings);
         System.out.println("meetings have been sorted by start time: " + meetings);
+      } else if (optionalOverlappedAttendees.size() != 0) {
+        // If event contains optional attendees that were requested
+        System.out.println("Event contains optional attendees...");
+        optionalOverlappedEvents.add(event);
       }
     }
+
+    // Handle optional events restrictions separately from mandatory ones
+    ArrayList<TimeRange> meetingsWithOptional = (ArrayList<TimeRange>) meetings.clone();
+
+    for (Event event : optionalOverlappedEvents) {
+      TimeRange eventTimeRange = event.getWhen();
+      System.out.println("Optional event range: " + eventTimeRange.start() + " to " + eventTimeRange.end());
+      System.out.println("Current proposed meetings: " + meetingsWithOptional);
+
+      // Make new proposed meets to resolve timing conflicts
+      System.out.println("Calling method: makeNewProposedMeetings...");
+      meetingsWithOptional = makeNewProposedMeetings(meetingsWithOptional, eventTimeRange, request);
+
+      System.out.println("meetingsWithOptional has been updated to: " + meetingsWithOptional);
+      Comparator<TimeRange> orderMeetings = TimeRange.ORDER_BY_START;
+      Collections.sort(meetingsWithOptional, orderMeetings);
+      System.out.println("meetingsWithOptional have been sorted by start time: " + meetingsWithOptional);
+    }
     
-    System.out.println("FindMeetingQuery returns: " + meetings);
-    return meetings;
+    System.out.println("Meetings " + meetings + "\nMeetings with optionals: " + meetingsWithOptional);
+    if (requestedAttendees.size() == 0 && requestedOptionalAttendees.size() > 0) {
+      return meetingsWithOptional;
+    }
+
+    return meetingsWithOptional.size() > 0 ? meetingsWithOptional : meetings;
+  }
+
+  // Helper func: copy unmodifiable set to modifiable set
+  public Set<String> copyToModifiableCollection(Set<String> set, 
+                                                Set<String> originalSet) {
+    for (String attendee : originalSet) {
+      set.add(attendee);
+    }
+
+    return set;
   }
 
   /** Helper func: make new proposed meets by adjusting previous proposed
@@ -187,6 +236,8 @@ public final class FindMeetingQuery {
 
       if (tempMeeting.duration() < request.getDuration()) {
         System.out.println("Duration of suggested time too short; removing suggestion...");
+        System.out.println("temptMeeting duration: " + tempMeeting.duration());
+        System.out.println("request duration: " + request.getDuration());
         iter.remove();
       }
     }
