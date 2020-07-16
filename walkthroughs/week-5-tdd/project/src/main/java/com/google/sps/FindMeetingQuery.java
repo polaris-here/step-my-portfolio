@@ -50,19 +50,10 @@ public final class FindMeetingQuery {
     for (Event event : events) {
       Set<String> tempOverlappedEventAttendees = event.getAttendees();
 
-      Set<String> overlappedEventAttendees = new HashSet<String>();
-      Set<String> optionalOverlappedAttendees = new HashSet<String>();
-
-      // Copy attendees into a modifiable collection
-      overlappedEventAttendees = 
-        copyToModifiableCollection(
-          overlappedEventAttendees, 
-          tempOverlappedEventAttendees);
-      // Copy optional attendees into a modifiable collection
-      optionalOverlappedAttendees = 
-        copyToModifiableCollection(
-          optionalOverlappedAttendees, 
-          tempOverlappedEventAttendees);
+      Set<String> overlappedEventAttendees = 
+        new HashSet<String>(tempOverlappedEventAttendees);
+      Set<String> optionalOverlappedAttendees = 
+        new HashSet<String>(tempOverlappedEventAttendees);
 
       // Filter events for overlaps with request
       overlappedEventAttendees.retainAll(requestedAttendees);
@@ -103,16 +94,6 @@ public final class FindMeetingQuery {
       return meetingsWithOptional;
     }
     return !meetingsWithOptional.isEmpty() ? meetingsWithOptional : meetings;
-  }
-
-  // Copy unmodifiable set to modifiable set
-  public Set<String> copyToModifiableCollection(Set<String> set, 
-                                                Set<String> originalSet) {
-    for (String attendee : originalSet) {
-      set.add(attendee);
-    }
-
-    return set;
   }
 
   /** Return new proposed meets by adjusting input proposed
