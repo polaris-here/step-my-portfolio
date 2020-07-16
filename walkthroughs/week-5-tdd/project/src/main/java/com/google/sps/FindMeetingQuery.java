@@ -27,6 +27,9 @@ import java.util.Set;
 public final class FindMeetingQuery {
   public static final int NUM_MINUTES_IN_DAY = 24 * 60;
 
+  /** Return a collection of TimeRanges where the requested attendees 
+    * are available to meet
+    */
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     ArrayList<TimeRange> meetings = new ArrayList<>();
     Collection<String> requestedAttendees = request.getAttendees();
@@ -65,7 +68,7 @@ public final class FindMeetingQuery {
       overlappedEventAttendees.retainAll(requestedAttendees);
       optionalOverlappedAttendees.retainAll(requestedOptionalAttendees);
 
-      if (overlappedEventAttendees.size() != 0) {
+      if (!overlappedEventAttendees.isEmpty()) {
         // Event contains attendees that were requested
         TimeRange eventTimeRange = event.getWhen();
 
@@ -74,7 +77,7 @@ public final class FindMeetingQuery {
 
         Comparator<TimeRange> orderMeetings = TimeRange.ORDER_BY_START;
         Collections.sort(meetings, orderMeetings);
-      } else if (optionalOverlappedAttendees.size() != 0) {
+      } else if (!optionalOverlappedAttendees.isEmpty()) {
         // Event contains optional attendees that were requested
         optionalOverlappedEvents.add(event);
       }
@@ -96,10 +99,10 @@ public final class FindMeetingQuery {
     }
 
     // Return meeting set based on attendees and availabilities
-    if (requestedAttendees.size() == 0 && requestedOptionalAttendees.size() > 0) {
+    if (requestedAttendees.isEmpty() && !requestedOptionalAttendees.isEmpty()) {
       return meetingsWithOptional;
     }
-    return meetingsWithOptional.size() > 0 ? meetingsWithOptional : meetings;
+    return !meetingsWithOptional.isEmpty() ? meetingsWithOptional : meetings;
   }
 
   // Helper func: copy unmodifiable set to modifiable set
