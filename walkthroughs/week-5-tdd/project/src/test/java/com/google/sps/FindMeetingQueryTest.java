@@ -59,7 +59,6 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void optionsForNoAttendees() {
-    System.out.println("\n***Test: optionsForNoAttendees()");
     MeetingRequest request = new MeetingRequest(NO_ATTENDEES, DURATION_1_HOUR);
 
     Collection<TimeRange> actual = query.query(NO_EVENTS, request);
@@ -70,7 +69,6 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void noOptionsForTooLongOfARequest() {
-    System.out.println("\n***Test: noOptionsForTooLongOfARequest()");
     // The duration should be longer than a day. This means there should be no options.
     int duration = TimeRange.WHOLE_DAY.duration() + 1;
     MeetingRequest request = new MeetingRequest(Arrays.asList(PERSON_A), duration);
@@ -83,7 +81,6 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void eventSplitsRestriction() {
-    System.out.println("\n***Test: eventSplitsRestriction()");
     // The event should split the day into two options (before and after the event).
     Collection<Event> events = Arrays.asList(new Event("Event 1",
         TimeRange.fromStartDuration(TIME_0830AM, DURATION_30_MINUTES), Arrays.asList(PERSON_A)));
@@ -100,7 +97,6 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void everyAttendeeIsConsidered() {
-    System.out.println("\n***Test: everyAttendeeIsConsidered()");
     // Have each person have different events. We should see two options because each person has
     // split the restricted times.
     //
@@ -128,7 +124,6 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void overlappingEvents() {
-    System.out.println("\n***Test: overlappingEvents()");
     // Have an event for each person, but have their events overlap. We should only see two options.
     //
     // Events  :       |--A--|
@@ -155,7 +150,6 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void nestedEvents() {
-    System.out.println("\n***Test: nestedEvents()");
     // Have an event for each person, but have one person's event fully contain another's event. We
     // should see two options.
     //
@@ -183,7 +177,6 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void doubleBookedPeople() {
-    System.out.println("\n***Test: doubleBookedPeople()");
     // Have one person, but have them registered to attend two events at the same time.
     //
     // Events  :       |----A----|
@@ -209,7 +202,6 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void justEnoughRoom() {
-    System.out.println("\n***Test: justEnoughRoom()");
     // Have one person, but make it so that there is just enough room at one point in the day to
     // have the meeting.
     //
@@ -234,7 +226,6 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void ignoresPeopleNotAttending() {
-    System.out.println("\n***Test: ignoresPeopleNotAttending()");
     // Add an event, but make the only attendee someone different from the person looking to book
     // a meeting. This event should not affect the booking.
     Collection<Event> events = Arrays.asList(new Event("Event 1",
@@ -249,7 +240,6 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void noConflicts() {
-    System.out.println("\n***Test: noConflicts()");
     MeetingRequest request =
         new MeetingRequest(Arrays.asList(PERSON_A, PERSON_B), DURATION_30_MINUTES);
 
@@ -261,7 +251,6 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void notEnoughRoom() {
-    System.out.println("\n***Test: notEnoughRoom()");
     // Have one person, but make it so that there is not enough room at any point in the day to
     // have the meeting.
     //
@@ -286,13 +275,8 @@ public final class FindMeetingQueryTest {
   // Test suite for optional attendees
   @Test
   public void optionalAttendeesEveryAttendeeIsConsideredWholeDay() {
-    System.out.println("\n***Test: optionalAttendeesEveryAttendeeIsConsideredWholeDay()");
-    // Have each person have different events. We should see two options because each person has
-    // split the restricted times.
-    //
-    // Events  :       |--A--|     |--B--|
-    // Day     : |-----------------------------|
-    // Options : |--1--|     |--2--|     |--3--|
+    // Based on everyAttendeeIsConsidered
+    // Optional attendee C isn't available, so they are not considered
 
     Collection<Event> events = Arrays.asList(
         new Event("Event 1", TimeRange.fromStartDuration(TIME_0800AM, DURATION_30_MINUTES),
@@ -319,13 +303,8 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void optionalAttendeesEveryAttendeeIsConsidered() {
-    System.out.println("\n***Test: optionalAttendeesEveryAttendeeIsConsidered()");
-    // Have each person have different events. We should see two options because each person has
-    // split the restricted times.
-    //
-    // Events  :       |--A--|     |--B--|
-    // Day     : |-----------------------------|
-    // Options : |--1--|     |--2--|     |--3--|
+    // Based on everyAttendeeIsConsidered
+    // An option that includes optional attendee C is available, so return that set
 
     Collection<Event> events = Arrays.asList(
         new Event("Event 1", TimeRange.fromStartDuration(TIME_0800AM, DURATION_30_MINUTES),
@@ -351,13 +330,9 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void optionalJustEnoughRoom() {
-    System.out.println("\n***Test: optionalJustEnoughRoom()");
-    // Have one person, but make it so that there is just enough room at one point in the day to
+    // Have two optional attendee, 
+    // but make it so that there is just enough room at one point in the day to
     // have the meeting.
-    //
-    // Events  : |--A--|     |----A----|
-    // Day     : |---------------------|
-    // Options :       |-----|
 
     Collection<Event> events = Arrays.asList(
         new Event("Event 1", TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0830AM, false),
@@ -381,14 +356,7 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void optionalAttendeesOnlyNoMandatoryAttendees() {
-    System.out.println("\n***Test: optionalAttendeesOnlyNoMandatoryAttendees()");
-    // Have each person have different events. We should see two options because each person has
-    // split the restricted times.
-    //
-    // Events  :       |--A--|     |--B--|
-    // Day     : |-----------------------------|
-    // Options : |--1--|     |--2--|     |--3--|
-
+    // Only optional attendees requested, should return their availability
     Collection<Event> events = Arrays.asList(
         new Event("Event 1", TimeRange.fromStartDuration(TIME_0800AM, DURATION_30_MINUTES),
             Arrays.asList(PERSON_A)),
@@ -413,8 +381,7 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void optionalAttendeesOnlyNoGaps() {
-    System.out.println("\n***Test: optionalAttendeesOnlyNoGaps()");
-
+    // Optional attendees have no time in schedules, should return no time
     Collection<Event> events = Arrays.asList(
         new Event("Event 1", TimeRange.WHOLE_DAY,
             Arrays.asList(PERSON_A)),
