@@ -37,8 +37,9 @@ public final class FindMeetingQuery {
       request.getOptionalAttendees();
     long durationOfRequest = request.getDuration();
 
-    // Case 0: If duration too long (longer than a day)
-    // or invalid input/negative time, return no options
+    /** Case 0: If duration too long (longer than a day)
+      *  or invalid input/negative time, return no options
+      */
     if (durationOfRequest > NUM_MINUTES_IN_DAY || durationOfRequest < 0) {
       return meetings;
     }
