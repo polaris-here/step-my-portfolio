@@ -25,7 +25,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 public final class FindMeetingQuery {
-  public static final int WHOLE_DAY = 24 * 60;
+  public static final int NUM_MINUTES_IN_DAY = 24 * 60;
 
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     ArrayList<TimeRange> meetings = new ArrayList<>();
@@ -35,14 +35,14 @@ public final class FindMeetingQuery {
     long durationOfRequest = request.getDuration();
 
     // Case 0: if duration too long (longer than a day), return no options
-    if (durationOfRequest > WHOLE_DAY) {
+    if (durationOfRequest > NUM_MINUTES_IN_DAY) {
       return meetings;
     }
 
     /** Case 1: GENERAL CASE >> remove conflicting times(from @events) 
       * from possible meetings
       */
-    meetings.add(TimeRange.fromStartDuration(0, WHOLE_DAY));
+    meetings.add(TimeRange.fromStartDuration(0, NUM_MINUTES_IN_DAY));
     ArrayList<Event> optionalOverlappedEvents = new ArrayList<>();
     for (Event event : events) {
       Set<String> tempOverlappedEventAttendees = event.getAttendees();
