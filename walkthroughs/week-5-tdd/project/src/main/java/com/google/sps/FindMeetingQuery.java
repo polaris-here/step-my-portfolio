@@ -105,7 +105,7 @@ public final class FindMeetingQuery {
     return !meetingsWithOptional.isEmpty() ? meetingsWithOptional : meetings;
   }
 
-  // Helper func: copy unmodifiable set to modifiable set
+  // Copy unmodifiable set to modifiable set
   public Set<String> copyToModifiableCollection(Set<String> set, 
                                                 Set<String> originalSet) {
     for (String attendee : originalSet) {
@@ -115,7 +115,7 @@ public final class FindMeetingQuery {
     return set;
   }
 
-  /** Helper func: return new proposed meets by adjusting input proposed
+  /** Return new proposed meets by adjusting input proposed
     * meets to exclude times that conflict with @events
     */ 
   public ArrayList<TimeRange> makeNewProposedMeetings(
