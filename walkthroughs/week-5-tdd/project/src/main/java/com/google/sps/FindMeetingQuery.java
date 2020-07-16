@@ -114,7 +114,7 @@ public final class FindMeetingQuery {
           if (eventTimeRange.end() < curMeetingTimeRange.end()) {
             /** Case 1:
               *     |--Existing Event--|
-              *                |--Conflict--|
+              *            |--Potential meeting time--|
               */
             TimeRange tempProposedMeeting = 
               TimeRange.fromStartEnd(
@@ -125,16 +125,16 @@ public final class FindMeetingQuery {
             tempListMeetings.add(tempProposedMeeting);
           } else {
             /** Case 2:
-              *     |--Existing Event--|
-              *         |--Conflict--|
+              *     |----------Existing Event----------|
+              *         |--Potential meeting time--|
               */
             continue;
           }
         } else {
           if (eventTimeRange.end() < curMeetingTimeRange.end()) {
             /** Case 3:
-              *        |--Existing Event--|
-              *     |--------Conflict--------|
+              *          |--Existing Event--|
+              *     |---Potential meeting time---|
               */
             TimeRange tempProposedMeetingA = 
               TimeRange.fromStartEnd(
@@ -151,8 +151,8 @@ public final class FindMeetingQuery {
             tempListMeetings.add(tempProposedMeetingB);
           } else {
             /** Case 4:
-              *            |--Existing Event--|
-              *     |--Conflict--|
+              *                     |--Existing Event--|
+              *     |--Potential meeting time--|
               */
             TimeRange tempProposedMeeting = 
               TimeRange.fromStartEnd(
