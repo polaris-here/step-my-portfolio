@@ -41,6 +41,7 @@ public final class FindMeetingQuery {
     if (durationOfRequest > NUM_MINUTES_IN_DAY) {
       return meetings;
     }
+    
     // Case 1: Invalid input
     if (durationOfRequest < 0) {
       return Arrays.asList();
