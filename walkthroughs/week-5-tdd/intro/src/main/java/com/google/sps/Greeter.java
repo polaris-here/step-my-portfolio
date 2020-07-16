@@ -29,14 +29,6 @@ public class Greeter {
 
   // Remove chars @, #, $, and % from @string
   private String removeSpecialChars(String string) {
-    String specialChars = "@#$%";
-    String edittedString = "";
-
-    for (int i = 0; i < string.length(); i++) {
-      if (!specialChars.contains(String.valueOf(string.charAt(i)))) {
-        edittedString += String.valueOf(string.charAt(i));
-      }
-    }
-    return edittedString;
+    return string.replaceAll("[@#$%]", "");
   }
 }
