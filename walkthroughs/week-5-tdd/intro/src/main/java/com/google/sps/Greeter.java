@@ -27,6 +27,7 @@ public class Greeter {
     return "Hello " + name;
   }
 
+  // Remove chars @, #, $, and % from @string
   private String removeSpecialChars(String string) {
     String specialChars = "@#$%";
     String edittedString = "";
