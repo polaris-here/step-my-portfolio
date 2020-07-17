@@ -235,6 +235,7 @@ i {
 .map-container *{
   text-align: center;
   margin: 3px;
+  color: black;
 }
 .map-wrapper {
     display: flex;

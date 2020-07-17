@@ -22,6 +22,13 @@ public class Greeter {
    * Returns a greeting for the given name.
    */
   public String greet(String name) {
+    name = name.trim();
+    name = removeSpecialChars(name);
     return "Hello " + name;
+  }
+
+  // Remove chars @, #, $, and % from @string
+  private String removeSpecialChars(String string) {
+    return string.replaceAll("[@#$%]", "");
   }
 }
